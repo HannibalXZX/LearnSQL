@@ -43,6 +43,13 @@ CREATE TABLE score (
     PRIMARY KEY(s_no, c_no)
 );
 
+-- 成绩等级表
+CREATE TABLE grade (
+    low INT(3),
+    upp INT(3),
+    grade char(1)
+);
+
 -- 查看所有表
 SHOW TABLES;
 
@@ -93,6 +100,13 @@ INSERT INTO score VALUES('109', '6-166', '81');
 INSERT INTO score VALUES('110', '7-186', '90');
 INSERT INTO score VALUES('111', '7-186', '91');
 INSERT INTO score VALUES('112', '7-186', '99');
+
+-- 加入成绩等级
+INSERT INTO grade VALUES (90, 100, 'A');
+INSERT INTO grade VALUES (80, 89, 'B');
+INSERT INTO grade VALUES (70, 79, 'C');
+INSERT INTO grade VALUES (60, 69, 'D');
+INSERT INTO grade VALUES (0, 59, 'E');
 
 
 -- 查看表结构
