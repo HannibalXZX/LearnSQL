@@ -1,3 +1,9 @@
+########################################
+# 一天搞定MySQL
+# https://mp.weixin.qq.com/s/5EsOhmyPRUpAUk9Sh4NMkg
+# 日期： 2020年06月25日
+########################################
+
 -- 查询 student 表的所有行
 SELECT * FROM student;
 
