@@ -6,6 +6,12 @@ https://www.nowcoder.com/ta/sql
 ## 答案参考
 https://www.jianshu.com/p/5a659c5b5656
 
+## OJ
+1、题目含糊不清，没有准确表达意思
+2、OJ判断比较死板，不是所有正确的解法都能通过
+3、正因缺陷比较多，所以写起来锻炼人的能力，因为要考虑到很多其他情况
+多看下评论，多思考。
+
 ## 网友优秀笔记摘抄
 
 #### on和where的区别
@@ -31,3 +37,6 @@ FROM、WHERE、GROUP BY、HAVING、SELECT、DISTINCT、UNION、ORDER BY
 * 尽量使用group by
 
 distinct相当于哈希表，将所有数据加载进来，时间复杂度低，空间复杂度高，group by是排序，时间复杂度高，空间复杂度低
+
+#### LEFT JOIN 和 IN
+MySQL官方文档有说明，in关键字适合确定数量的情况，一般效率较低，不推荐使用。能用in关键字的语句都可以转化为使用join的语句，推荐使用join关键字。
