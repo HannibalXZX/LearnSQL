@@ -198,7 +198,7 @@ GROUP BY d.dept_no, t.title
 
 
 #######
-# ex_27 给出每个员工每年薪水涨幅超过5000的员工编号emp_no、薪水变更开始日期from_date以及薪水涨幅值salary_growth，并按照salary_growth逆序排列。
+# ex_27、给出每个员工每年薪水涨幅超过5000的员工编号emp_no、薪水变更开始日期from_date以及薪水涨幅值salary_growth，并按照salary_growth逆序排列。
 ## 题意含糊不清
 
 -- 正确解法
@@ -212,5 +212,33 @@ ORDER BY salary_growth DESC
 
 
 #######
-# ex_28 给出每个员工每年薪水涨幅超过5000的员工编号emp_no、薪水变更开始日期from_date以及薪水涨幅值salary_growth，并按照salary_growth逆序排列。
-## 题意含糊不清
+# ex_28、查找描述信息(film.description)中包含robot的电影对应的分类名称(category.name)以及电影数目(count(film.film_id))
+# 而且还需要该分类包含电影总数量(count(film_category.category_id))>=5部
+
+-- 1、找出分类中电影数目>5的分类表cc
+-- 2、联结三张表
+
+SELECT category.name, COUNT(film.film_id)
+FROM film, film_category, category,
+(SELECT category_id, COUNT(film_id)
+FROM film_category GROUP BY category_id
+HAVING COUNT(film_id)>=5) AS fc
+WHERE film.film_id = film_category.film_id
+AND film_category.category_id = category.category_id
+AND film.description LIKE '%robot%'
+AND fc.category_id = category.category_id
+GROUP BY category.name
+
+# ex_29
+# 使用join查询方式找出没有分类的电影id以及名称
+
+SELECT film.film_id, film.title
+FROM film LEFT JOIN film_category
+ON film.film_id = film_category.film_id
+WHERE film_category.category_id IS NULL
+
+
+# 注意：最后一句若写成 ON f.film_id = fc.film_id AND fc.category_id IS NULL
+# 则意义变成左连接两表 film_id 相同的记录，且 film_category 原表中的 fc.category 的值为 null。
+# 显然，原表中的 fc.category 的值恒不为 null，因此（f.film_id = fc.film_id AND fc.category_id IS NULL）恒为 FALSE
+# 左连接后则只会显示 film 表的数据，而 film_category 表的数据全显示为 null */
