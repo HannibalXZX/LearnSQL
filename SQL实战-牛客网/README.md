@@ -47,3 +47,27 @@ where和having的不同之处在于，where是查找之前的限定，而having�
 #### JOIN关联表中ON,WHERE后面跟条件的区别
 参照：https://blog.csdn.net/wqc19920906/article/details/79785424
 不管on上的条件是否为真都会返回left或right表中的记录，full则具有left和right的特性的并集。 而inner jion没这个特殊性，则条件放在on中和where中，返回的结果集是相同的。
+
+#### EXPLAIN 函数作用
+作用
+1、表的读取顺序
+2、数据读取操作的操作类型
+3、哪些索引可以使用
+4、哪些索引被实际使用
+5、表之间的引用
+6、每张表有多少行被优化器查询
+
+#### MySQL创建索引方法：ALTER TABLE和CREATE INDEX的区别
+众所周知，MySQL创建索引有两种语法，即：
+ALTER TABLE HeadOfState ADD INDEX (LastName, FirstName);
+CREATE INDEX index_name HeadOfState (LastName, FirstName);
+那么，这两种语法有什么区别呢？ :wink:
+在网上找了一下，在一个英文网站上，总结了下面几个区别，我翻译出来，如下：
+1、CREATE INDEX必须提供索引名，对于ALTER TABLE，将会自动创建，如果你不提供；
+2、CREATE INDEX一个语句一次只能建立一个索引，ALTER TABLE可以在一个语句建立多个，如：
+      ALTER TABLE HeadOfState ADD PRIMARY KEY (ID), ADD INDEX (LastName,FirstName);
+3、只有ALTER TABLE 才能创建主键，
+
+#### 强制索引
+MYSQL中强制索引查询使用：SELECT * FROM table FORCE INDEX(indexname);
+SQLite中强制索引查询使用：SELECT * FROM table INDEXED BY indexname;
