@@ -71,3 +71,18 @@ CREATE INDEX index_name HeadOfState (LastName, FirstName);
 #### 强制索引
 MYSQL中强制索引查询使用：SELECT * FROM table FORCE INDEX(indexname);
 SQLite中强制索引查询使用：SELECT * FROM table INDEXED BY indexname;
+
+#### 严格模式
+mysql的datetime类型无法插入'0000-00-00 00:00:00',这是因为开启了严格模式
+`SELECT @@sql_mode`
+`ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION`
+
+可以看到结果里面有 `NO_ZERO_IN_DATE, NO_ZERO_IN_DATE`
+把这两个去掉，再重新设置即可
+`SET GLOBAL sql_mode='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';`
+
+玄学：在Navicat Premium上不行，但在mysql终端上可行
+
+### MYSQL子查询的坑
+MySQL的UPDATE或DELETE中子查询不能为同一张表，可将查询结果再次SELECT。，在MySQL中还有一个坑，需要给子查询添加别名，
+不然会抛出错误：ERROR 1248 (42000): Every derived table must have its own alias

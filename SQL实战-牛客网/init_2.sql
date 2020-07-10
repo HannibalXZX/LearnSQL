@@ -54,3 +54,19 @@ INSERT INTO film_category VALUES(7,5,'2006-02-14 21:07:09');
 INSERT INTO film_category VALUES(8,6,'2006-02-14 21:07:09');
 INSERT INTO film_category VALUES(9,11,'2006-02-14 21:07:09');
 INSERT INTO film_category VALUES(10,15,'2006-02-14 21:07:09');
+
+
+CREATE TABLE IF NOT EXISTS titles_test (
+id int(11) not null primary key,
+emp_no int(11) NOT NULL,
+title varchar(50) NOT NULL,
+from_date date NOT NULL,
+to_date date DEFAULT NULL);
+
+insert into titles_test values ('1', '10001', 'Senior Engineer', '1986-06-26', '9999-01-01'),
+('2', '10002', 'Staff', '1996-08-03', '9999-01-01'),
+('3', '10003', 'Senior Engineer', '1995-12-03', '9999-01-01'),
+('4', '10004', 'Senior Engineer', '1995-12-03', '9999-01-01'),
+('5', '10001', 'Senior Engineer', '1986-06-26', '9999-01-01'),
+('6', '10002', 'Staff', '1996-08-03', '9999-01-01'),
+('7', '10003', 'Senior Engineer', '1995-12-03', '9999-01-01');
