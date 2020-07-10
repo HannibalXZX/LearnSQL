@@ -86,3 +86,24 @@ mysql的datetime类型无法插入'0000-00-00 00:00:00',这是因为开启了严
 ### MYSQL子查询的坑
 MySQL的UPDATE或DELETE中子查询不能为同一张表，可将查询结果再次SELECT。，在MySQL中还有一个坑，需要给子查询添加别名，
 不然会抛出错误：ERROR 1248 (42000): Every derived table must have its own alias
+
+#### 字符长度函数
+
+char_length（）: 统计的是字符长度，而length()函数统计的是字符串的字节长度，所以length('中')在utf8下的结果是3，而char_length('中')的结果仍然是1.
+
+#### Exists的用法
+*exists对外表用loop逐条查询*，每次查询都会查看exists的条件语句，当exists里的条件语句能够返回记录行时(无论记录行是的多少，只要能返回)，条件就为真，
+返回当前loop到的这条记录;反之如果exists里的条 件语句不能返回记录行，则当前loop到的这条记录被丢弃，exists的条件就像一个bool条件，当能返回结果集则为true，不能返回结果集则为 false。
+简而言之，需要建立内外关联。
+
+* 没有建立内外关联，等价于：SELECT b.emp_no FROM employees b 
+
+SELECT b.emp_no FROM employees b 
+WHERE  EXISTS  (SELECT emp_no FROM dept_emp)
+
+*  建立内外关联
+
+SELECT b.emp_no FROM employees b 
+WHERE  EXISTS  (SELECT emp_no FROM dept_emp WHERE b.emp_no=emp_no)
+
+
