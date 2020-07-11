@@ -100,3 +100,45 @@ WHERE  EXISTS  (SELECT emp_no FROM dept_emp)
 # 获取employees中的行数据，且这些行也存在于emp_v中。注意不能使用intersect关键字。
 
 SELECT * FROM emp_v
+
+# ex_59 给出emp_no、first_name、last_name、奖金类型btype、对应的当前薪水情况salary以及奖金金额bonus。
+# bonus类型btype为1其奖金为薪水salary的10%，btype为2其奖金为薪水的20%
+# 其他类型均为薪水的30%。 当前薪水表示to_date='9999-01-01'
+
+-- 必须 10.0，而不是10，因为bonus有小数一位
+SELECT emp_bonus.emp_no, e.first_name, e.last_name, btype, salaries.salary, (salary*btype/10.0) bonus
+FROM emp_bonus, salaries, employees e
+WHERE emp_bonus.emp_no = salaries.emp_no
+AND emp_bonus.emp_no = e.emp_no
+AND salaries.to_date='9999-01-01'
+
+-- case解法
+-- CASE [col_name] WHEN [value1] THEN [result1]…ELSE [default] END
+SELECT e.emp_no, e.first_name, e.last_name, b.btype, s.salary,
+(CASE b.btype
+     WHEN 1 THEN
+        s.salary * 0.1
+     WHEN 2 THEN
+         s.salary * 0.2
+     ELSE
+         s.salary * 0.3
+END) AS bonus
+FROM employees AS e INNER JOIN emp_bonus AS b
+ON e.emp_no = b.emp_no
+INNER JOIN salaries AS s
+ON e.emp_no = s.emp_no
+AND s.to_date = '9999-01-01'
+
+SELECT e.emp_no, e.first_name, e.last_name, eb.btype, s.salary,
+(CASE eb.btype
+WHEN 1 THEN
+   s.salary*0.1
+WHEN 2 THEN
+   s.salary*0.2
+ELSE
+   s.salary*0.3
+END) as bonus
+FROM employees e,salaries s, emp_bonus eb
+WHERE e.emp_no = s.emp_no
+AND s.emp_no = eb.emp_no
+AND s.to_date='9999-01-01'
