@@ -5,8 +5,10 @@
 # date : 2020-07-04
 ############################################
 
+### 题号查找：ex_题号
+
 ########
-# 1、查找最晚入职员工的所有信息
+# ex_1、查找最晚入职员工的所有信息
 -- 仅限入职最晚日期只有1人
 SELECT * FROM employees ORDER BY hire_date DESC LIMIT 1;
 
@@ -15,7 +17,7 @@ SELECT * FROM employees WHERE hire_date = (
 SELECT MAX(hire_date) FROM employees);
 
 ########
-# 2、查找入职员工时间排名倒数第三的员工所有信息
+# ex_2、查找入职员工时间排名倒数第三的员工所有信息
 -- 只有1人, 此处存在问题，倒数一二日期可能存在多人！
 SELECT * FROM employees ORDER BY hire_date DESC LIMIT 2,1;
 
@@ -38,7 +40,7 @@ SELECT hire_date FROM employees
 GROUP BY hire_date ORDER BY hire_date DESC limit 2,1)
 
 ########
-# 3、查找各个部门当前(dept_manager.to_date='9999-01-01')领导
+# ex_3、查找各个部门当前(dept_manager.to_date='9999-01-01')领导
 # 当前(salaries.to_date='9999-01-01')薪水详情以及其对应部门编号dept_no
 
 -- 请以salaries表为主表进行查询，输出结果以salaries.emp_no升序排序
@@ -66,7 +68,7 @@ WHERE d.to_date='9999-01-01'
 AND s.to_date='9999-01-01';
 
 ########
-# 4、查找所有已经分配部门的员工的last_name和first_name以及dept_no
+# ex_4、查找所有已经分配部门的员工的last_name和first_name以及dept_no
 -- 请注意输出描述里各个列的前后顺序
 
 # 答案是按employees表中顺序输出的，所以使用内连接查询时，必须将employees表放在前面。
@@ -96,7 +98,7 @@ ON employees.emp_no = dept_emp.emp_no;
 
 
 ########
-# 5、查找所有员工的last_name和first_name以及对应部门编号dept_no，也包括暂时没有分配具体部门的员工
+# ex_5、查找所有员工的last_name和first_name以及对应部门编号dept_no，也包括暂时没有分配具体部门的员工
 -- (请注意输出描述里各个列的前后顺序)
 
 SELECT last_name,first_name,dept_no
@@ -104,7 +106,7 @@ FROM employees LEFT JOIN dept_emp
 ON employees.emp_no = dept_emp.emp_no;
 
 
-# 6、查找所有员工入职时候的薪水情况，给出emp_no以及salary
+# ex_6、查找所有员工入职时候的薪水情况，给出emp_no以及salary
 # 并按照emp_no进行逆序
 
 SELECT employees.emp_no, salaries.salary
@@ -142,7 +144,7 @@ AND s.from_date = t.min_date
 ORDER BY s.emp_no DESC;
 
 ########
-# 7、查找薪水【变动】超过15次的员工号emp_no以及其对应的变动次数t
+# ex_7、查找薪水【变动】超过15次的员工号emp_no以及其对应的变动次数t
 -- 仅仅是薪水变动，包括涨幅和下降！
 SELECT emp_no, COUNT(salary) as t
 FROM salaries GROUP BY emp_no
@@ -160,7 +162,7 @@ GROUP BY a.emp_no
 HAVING t>15;
 
 #######
-# 8、找出所有员工当前(to_date='9999-01-01')具体的薪水salary情况
+# ex_8、找出所有员工当前(to_date='9999-01-01')具体的薪水salary情况
 # 对于相同的薪水只显示一次,并按照逆序显示
 
 -- DISTINCT
@@ -176,7 +178,7 @@ GROUP BY salary
 ORDER BY salary DESC
 
 #######
-# 9、获取所有部门当前(dept_manager.to_date='9999-01-01')manager的当前(salaries.to_date='9999-01-01')薪水情况
+# ex_9、获取所有部门当前(dept_manager.to_date='9999-01-01')manager的当前(salaries.to_date='9999-01-01')薪水情况
 # 给出dept_no, emp_no以及salary(请注意，同一个人可能有多条薪水情况记录)
 
 SELECT dept_no, dept_manager.emp_no, salary
